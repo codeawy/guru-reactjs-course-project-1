@@ -1,34 +1,58 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
+import { Fragment, useState } from "react";
+import formInputs from "./lists/formInputs";
+import ErrorMessage from "./shared/ErrorMessage/ErrorMessage";
+import FormInput from "./shared/FormInput/FormInput";
+import FormSubmitBtn from "./shared/FormSubmitBtn/FormSubmitBtn";
 
-function App() {
-  const [count, setCount] = useState(0)
+/** ---------- COMPONENT ---------- */
+
+const App = () => {
+  /** ---------- STATE ---------- */
+  const [product, setUser] = useState({
+    title: "",
+    description: "",
+    image: "",
+    price: "",
+    brand: "",
+    colors: [],
+    // sizes: [], // TODO
+  });
+
+  /** ---------- HANDLER ---------- */
+  const onChangeHandler = e => {
+    const {
+      target: { name, value },
+    } = e;
+
+    setUser({
+      ...product,
+      [name]: value,
+    });
+  };
+
+  /** ---------- RENDER ---------- */
+  const renderFormInputList = formInputs.map((input, idx) => (
+    <Fragment key={idx}>
+      <FormInput
+        labelTxt={input.label}
+        id={input.name}
+        type={input.type}
+        name={input.name}
+        value={product[name]}
+        onChange={onChangeHandler}
+      />
+      <ErrorMessage />
+    </Fragment>
+  ));
 
   return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+    <div>
+      <form className="m-6">
+        {renderFormInputList}
+        <FormSubmitBtn />
+      </form>
     </div>
-  )
-}
+  );
+};
 
-export default App
+export default App;
