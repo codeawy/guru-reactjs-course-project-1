@@ -9,7 +9,7 @@ const FormInput = ({
   isRequired = false,
 }) => {
   return (
-    <div className="mb-2 flex flex-col">
+    <div className="mb-4 flex flex-col">
       <label htmlFor={id} className="mb-[1px] font-medium text-sm">
         {labelTxt}
       </label>

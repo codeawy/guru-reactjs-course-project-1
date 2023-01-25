@@ -1,7 +1,7 @@
 export default [
   {
     name: "title",
-    label: "Product Name",
+    label: "Product Title",
     type: "text",
   },
   {
