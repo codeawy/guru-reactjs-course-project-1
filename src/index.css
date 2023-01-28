@@ -8,5 +8,9 @@
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
+  -moz-line-clamp: 3;
+  -moz-box-orient: vertical;
+  -ms-line-clamp: 3;
+  -ms-box-orient: vertical;
   overflow: hidden;
 }

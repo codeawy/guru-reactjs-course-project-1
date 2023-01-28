@@ -71,8 +71,8 @@ const App = () => {
     <ProductCard
       key={product.id}
       {...product}
-      postList={productList}
-      setPostList={setProductList}
+      productList={productList}
+      setProductList={setProductList}
     />
   ));
 
