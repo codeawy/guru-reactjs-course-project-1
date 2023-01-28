@@ -1,5 +1,5 @@
 const FormInput = ({
-  labelTxt = "",
+  label = "",
   id = "",
   type = "text",
   name = "",
@@ -11,7 +11,7 @@ const FormInput = ({
   return (
     <div className="mb-4 flex flex-col">
       <label htmlFor={id} className="mb-[1px] font-medium text-sm">
-        {labelTxt}
+        {label}
       </label>
       <input
         type={type}
