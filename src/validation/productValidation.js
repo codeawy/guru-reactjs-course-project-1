@@ -9,9 +9,9 @@ export const productDataValidation = values => {
   if (
     !values.description.trim() ||
     values.description.length < 10 ||
-    values.description.length > 150
+    values.description.length > 350
   ) {
-    errors.description = "Product description must be between 10 and 150 characters!";
+    errors.description = "Product description must be between 10 and 350 characters!";
   }
 
   if (!values.image.trim() || !validUrl) {

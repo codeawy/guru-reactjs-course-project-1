@@ -1,7 +1,6 @@
 import ColorCircle from "./ColorCircle";
 
 const ProductCard = ({ id, title, image, description, price, brand, colors }) => {
-  console.log(colors);
   const renderColors = colors.map(color => <ColorCircle key={color} bg={color} />);
 
   return (
@@ -11,7 +10,7 @@ const ProductCard = ({ id, title, image, description, price, brand, colors }) =>
       </div>
       <div className="p-2 text-sm mt-3">
         <h3 className="text-lg uppercase">{title}</h3>
-        <p className="text-xs text-gray-500 my-2 break-words">{description}</p>
+        <p className="text-xs text-gray-500 my-2 break-words webkit">{description}</p>
         <p className="flex items-center mb-3">
           <del className="text-red-600 mr-5">${price}</del>
           <span className="bg-primary py-2 px-4 rounded-md text-white">${price}</span>
