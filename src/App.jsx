@@ -27,7 +27,9 @@ const App = () => {
     colors: [],
     // sizes: [],
   });
+  const [tempColors, setTempColors] = useState([]);
 
+  useState;
   const [errors, setErrors] = useState({ ...product });
   const [isError, setIsError] = useState(false);
 
@@ -50,7 +52,7 @@ const App = () => {
       return;
     }
 
-    setProductList([...productList, { ...product, id: nanoid() }]);
+    setProductList([...productList, { ...product, id: nanoid(), colors: tempColors }]);
     // setPost({
     //   title: "",
     //   description: "",
@@ -60,12 +62,18 @@ const App = () => {
     //   colors: [],
     // });
 
+    setTempColors([]);
     setIsError(false);
   };
 
   /* ------- RENDER -------  */
-  const renderPostList = productList.map(post => (
-    <ProductCard key={post.id} {...post} postList={productList} setPostList={setProductList} />
+  const renderPostList = productList.map(product => (
+    <ProductCard
+      key={product.id}
+      {...product}
+      postList={productList}
+      setPostList={setProductList}
+    />
   ));
 
   const renderFormInputList = formInputList.map(({ name, label, type }, idx) => (
@@ -99,7 +107,8 @@ const App = () => {
                 key={idx}
                 bg={color}
                 onClick={() => {
-                  console.log(color);
+                  if (tempColors.includes(color)) return;
+                  setTempColors(prev => [...prev, color]);
                 }}
               />
             ))}
