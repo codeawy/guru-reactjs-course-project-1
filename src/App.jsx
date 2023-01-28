@@ -14,9 +14,11 @@ import FormSubmitBtn from "./shared/FormSubmitBtn/FormSubmitBtn";
 import ErrorMessage from "./shared/ErrorMessage/ErrorMessage";
 import ColorCircle from "./components/ColorCircle";
 import COLORS from "./lists/colors";
+import Modal from "./shared/Modal/Modal";
 
 const App = () => {
   /* ------- STATE -------  */
+  const [modalIsOpen, setModalIsOpen] = useState(false);
   const [productList, setProductList] = useState([]);
   const [product, setProduct] = useState({
     title: "",
@@ -28,8 +30,8 @@ const App = () => {
     // sizes: [],
   });
   const [tempColors, setTempColors] = useState([]);
+  const [temProductIdx, setTemProductIdx] = useState(null);
 
-  useState;
   const [errors, setErrors] = useState({ ...product });
   const [isError, setIsError] = useState(false);
 
@@ -42,6 +44,15 @@ const App = () => {
     setProduct({ ...product, [name]: value });
     setErrors({ ...errors, [name]: "" });
   };
+
+  function openModal() {
+    setModalIsOpen(true);
+  }
+
+  function closeModal() {
+    setModalIsOpen(false);
+    setTemProductIdx(null);
+  }
 
   const onSubmitHandler = e => {
     e.preventDefault();
@@ -67,12 +78,15 @@ const App = () => {
   };
 
   /* ------- RENDER -------  */
-  const renderPostList = productList.map(product => (
+  const renderPostList = productList.map((product, idx) => (
     <ProductCard
       key={product.id}
       {...product}
       productList={productList}
       setProductList={setProductList}
+      openModal={openModal}
+      idx={idx}
+      setTemProductIdx={setTemProductIdx}
     />
   ));
 
@@ -127,6 +141,8 @@ const App = () => {
           <FormSubmitBtn isError={isError} />
         </form>
       </div>
+      {/* O(1)  */}
+      <Modal modalIsOpen={modalIsOpen} closeModal={closeModal} data={productList[temProductIdx]} />
     </div>
   );
 };

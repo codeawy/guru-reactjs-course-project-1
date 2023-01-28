@@ -1,8 +1,12 @@
+import { useState } from "react";
+import Modal from "../shared/Modal/Modal";
 import ColorCircle from "./ColorCircle";
 import CloseIcon from "./svg/CloseIcon";
 import EyeIcon from "./svg/EyeIcon";
 
 const ProductCard = ({
+  idx,
+  setTemProductIdx,
   id,
   title,
   image,
@@ -12,6 +16,7 @@ const ProductCard = ({
   colors,
   productList = [],
   setProductList,
+  openModal = () => {},
 }) => {
   const renderColors = colors.map(color => <ColorCircle key={color} bg={color} />);
 
@@ -44,7 +49,13 @@ const ProductCard = ({
         <span className="absolute top-5 right-5 cursor-pointer" onClick={filterById}>
           <CloseIcon />
         </span>
-        <span className="absolute top-12 right-5 cursor-pointer" onClick={() => {}}>
+        <span
+          className="absolute top-12 right-5 cursor-pointer"
+          onClick={() => {
+            openModal();
+            setTemProductIdx(idx);
+          }}
+        >
           <EyeIcon />
         </span>
       </div>
