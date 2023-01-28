@@ -99,15 +99,26 @@ const App = () => {
 
         <form className="w-full lg:w-1/4" onSubmit={onSubmitHandler}>
           {renderFormInputList}
-          <p>COLORS: (0)</p>
-          <p>Selected Colors: __</p>
+          <p>COLORS: ({tempColors.length})</p>
+          <p>
+            Selected Colors: {!tempColors.length ? "__" : ""}
+            {tempColors.map((color, idx) => (
+              <span key={color}>
+                {color}
+                {idx + 1 === tempColors.length ? "" : ", "}
+              </span>
+            ))}
+          </p>
           <div className="flex items-center my-3">
             {COLORS.map((color, idx) => (
               <ColorCircle
                 key={idx}
                 bg={color}
                 onClick={() => {
-                  if (tempColors.includes(color)) return;
+                  if (tempColors.includes(color)) {
+                    setTempColors(prevState => prevState.filter(item => item !== color));
+                    return;
+                  }
                   setTempColors(prev => [...prev, color]);
                 }}
               />
