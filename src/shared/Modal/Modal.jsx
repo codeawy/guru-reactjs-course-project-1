@@ -1,5 +1,5 @@
-import { useState } from "react";
 import ReactModal from "react-modal";
+import { toast } from "react-toastify";
 import ColorCircle from "../../components/ColorCircle";
 import { numberWithCommas } from "../../utils/func";
 
@@ -42,7 +42,7 @@ const Modal = ({ modalIsOpen, closeModal, data, onClickAction }) => {
                     <img
                       src={data?.image}
                       alt={data?.title}
-                      className="rounded-xl block max-w-full object-contain mt-4"
+                      className="rounded-xl block max-w-full max-h-96 mx-auto p-3 object-contain mt-4"
                     />
                     <p className="py-2 mt-4 rounded-md font-bold text-lg text-indigo-600">
                       ${numberWithCommas(data?.price)}
@@ -52,6 +52,13 @@ const Modal = ({ modalIsOpen, closeModal, data, onClickAction }) => {
                     ) : (
                       <ul className="flex items-center mt-4">{renderColors}</ul>
                     )}
+
+                    <div className="flex items-center my-3">
+                      <img src={data?.category?.avatar} className="w-10 h-10 rounded-full" />
+                      <p className="ml-3 text-sm font-medium text-gray-700">
+                        {data?.category?.name}
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -62,6 +69,16 @@ const Modal = ({ modalIsOpen, closeModal, data, onClickAction }) => {
                   onClick={() => {
                     onClickAction(data?.id);
                     closeModal();
+                    toast.success("Product has been removed successfully", {
+                      position: "bottom-center",
+                      autoClose: 1000,
+                      hideProgressBar: false,
+                      closeOnClick: true,
+                      pauseOnHover: true,
+                      draggable: true,
+                      progress: undefined,
+                      theme: "dark",
+                    });
                   }}
                 >
                   Destroy
