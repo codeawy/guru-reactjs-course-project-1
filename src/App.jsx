@@ -6,6 +6,7 @@ import { productDataValidation } from "./validation/productValidation";
 
 /* ------- MOCK -------  */
 import formInputList from "./lists/formInputs";
+import COLORS from "./lists/colors";
 
 /* ------- COMPONENT -------  */
 import ProductCard from "./components/ProductCard";
@@ -13,8 +14,8 @@ import FormInput from "./shared/FormInput/FormInput";
 import FormSubmitBtn from "./shared/FormSubmitBtn/FormSubmitBtn";
 import ErrorMessage from "./shared/ErrorMessage/ErrorMessage";
 import ColorCircle from "./components/ColorCircle";
-import COLORS from "./lists/colors";
 import Modal from "./shared/Modal/Modal";
+import SelectMenu from "./shared/SelectMenu/SelectMenu";
 
 const App = () => {
   /* ------- STATE -------  */
@@ -25,7 +26,6 @@ const App = () => {
     description: "",
     image: "",
     price: "",
-    brand: "",
     colors: [],
     // sizes: [],
   });
@@ -45,14 +45,19 @@ const App = () => {
     setErrors({ ...errors, [name]: "" });
   };
 
-  function openModal() {
+  const openModal = () => {
     setModalIsOpen(true);
-  }
+  };
 
-  function closeModal() {
+  const closeModal = () => {
     setModalIsOpen(false);
     setTemProductIdx(null);
-  }
+  };
+
+  const onDestroyProduct = id => {
+    const filteredArr = productList.filter(item => item.id !== id);
+    setProductList(filteredArr);
+  };
 
   const onSubmitHandler = e => {
     e.preventDefault();
@@ -78,7 +83,7 @@ const App = () => {
   };
 
   /* ------- RENDER -------  */
-  const renderPostList = productList.map((product, idx) => (
+  const renderProductList = productList.map((product, idx) => (
     <ProductCard
       key={product.id}
       {...product}
@@ -108,22 +113,27 @@ const App = () => {
     <div className="container mx-auto">
       <div className="flex flex-col-reverse lg:flex-row justify-between gap-10 my-20">
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3 ">
-          {renderPostList}
+          {renderProductList}
         </div>
 
         <form className="w-full lg:w-1/4" onSubmit={onSubmitHandler}>
           {renderFormInputList}
-          <p>COLORS: ({tempColors.length})</p>
-          <p>
+          <p className="text-sm font-medium text-gray-700">COLORS: ({tempColors.length})</p>
+          <p className="text-sm font-medium text-gray-700 mb-2">
             Selected Colors: {!tempColors.length ? "__" : ""}
-            {tempColors.map((color, idx) => (
-              <span key={color}>
+          </p>
+          <p className="flex flex-wrap">
+            {tempColors.map(color => (
+              <span
+                key={color}
+                className="p-1 mr-1 mb-1 text-xs rounded-md text-white"
+                style={{ backgroundColor: color }}
+              >
                 {color}
-                {idx + 1 === tempColors.length ? "" : ", "}
               </span>
             ))}
           </p>
-          <div className="flex items-center my-3">
+          <div className="flex items-center flex-wrap my-3">
             {COLORS.map((color, idx) => (
               <ColorCircle
                 key={idx}
@@ -138,11 +148,17 @@ const App = () => {
               />
             ))}
           </div>
+          <SelectMenu />
+
           <FormSubmitBtn isError={isError} />
         </form>
       </div>
-      {/* O(1)  */}
-      <Modal modalIsOpen={modalIsOpen} closeModal={closeModal} data={productList[temProductIdx]} />
+      <Modal
+        modalIsOpen={modalIsOpen}
+        closeModal={closeModal}
+        data={productList[temProductIdx]}
+        onClickAction={onDestroyProduct}
+      />
     </div>
   );
 };

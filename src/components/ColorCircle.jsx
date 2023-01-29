@@ -1,7 +1,7 @@
 const ColorCircle = ({ bg, onClick }) => {
   return (
     <span
-      className={`w-8 h-8 rounded-full mr-2 cursor-pointer`}
+      className={`w-5 h-5 rounded-full mr-1 cursor-pointer`}
       style={{
         backgroundColor: bg,
       }}

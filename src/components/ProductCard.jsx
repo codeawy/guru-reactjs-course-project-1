@@ -1,7 +1,6 @@
-import { useState } from "react";
-import Modal from "../shared/Modal/Modal";
+import { numberWithCommas } from "../utils/func";
 import ColorCircle from "./ColorCircle";
-import CloseIcon from "./svg/CloseIcon";
+import TrashIcon from "./svg/TrashIcon";
 import EyeIcon from "./svg/EyeIcon";
 
 const ProductCard = ({
@@ -25,17 +24,18 @@ const ProductCard = ({
     setProductList(filteredArr);
   };
 
+  console.log(numberWithCommas(price));
+
   return (
-    <div className="border-[1px] border-gray-300 rounded-lg flex flex-col justify-content h-fit overflow-hidden relative p-2">
+    <div className="max-w-[350px] border-[1px] border-gray-300 rounded-lg flex flex-col justify-content h-fit overflow-hidden relative p-2">
       <div className="rounded-lg overflow-hidden">
         <img src={image} alt="img" className="h-52 w-full lg:object-cover" />
       </div>
       <div className="p-2 text-sm mt-3">
-        <h3 className="text-lg uppercase">{title}</h3>
+        <h3 className="text-lg webkit">{title}</h3>
         <p className="text-xs text-gray-500 my-2 break-words webkit">{description}</p>
-        <p className="flex items-center mb-3">
-          <del className="text-red-600 mr-5">${price}</del>
-          <span className="py-2 px-4 rounded-md text-white bg-primary">${+price / 4}</span>
+        <p className="py-2 rounded-md font-bold text-lg text-indigo-600">
+          ${numberWithCommas(price)}
         </p>
         {!colors.length ? (
           <span>Not available colors!</span>
@@ -43,14 +43,11 @@ const ProductCard = ({
           <ul className="flex items-center mb-3">{renderColors}</ul>
         )}
 
-        <p className="mt-6 text-xs">
-          Brand: <span className="text-primary">{brand}</span>
-        </p>
-        <span className="absolute top-5 right-5 cursor-pointer" onClick={filterById}>
-          <CloseIcon />
+        <span className="absolute top-5 right-[5%] cursor-pointer" onClick={filterById}>
+          <TrashIcon />
         </span>
         <span
-          className="absolute top-12 right-5 cursor-pointer"
+          className="absolute top-12 right-[5%] cursor-pointer"
           onClick={() => {
             openModal();
             setTemProductIdx(idx);

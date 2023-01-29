@@ -2,8 +2,8 @@ export const productDataValidation = values => {
   const errors = {};
   const validUrl = /^(ftp|http|https):\/\/[^ "]+$/.test(values.image);
 
-  if (!values.title.trim() || values.title.length < 10 || values.title.length > 30) {
-    errors.title = "Product title must be between 10 and 30 characters!";
+  if (!values.title.trim() || values.title.length < 10 || values.title.length > 80) {
+    errors.title = "Product title must be between 10 and 80 characters!";
   }
 
   if (
@@ -22,10 +22,6 @@ export const productDataValidation = values => {
     errors.price = "Price is required!";
   } else if (isNaN(values.price)) {
     errors.brand = "Price is required!";
-  }
-
-  if (!values.brand.trim()) {
-    errors.brand = "Brand name is required";
   }
 
   return errors;
