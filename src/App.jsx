@@ -20,6 +20,7 @@ import ColorCircle from "./components/ColorCircle";
 import Modal from "./shared/Modal/Modal";
 import SelectMenu from "./shared/SelectMenu/SelectMenu";
 import HeroSection from "./components/HeroSection";
+import { categories } from "./lists/categories";
 
 const App = () => {
   /* ------- STATE -------  */
@@ -31,10 +32,13 @@ const App = () => {
     image: "",
     price: "",
     colors: [],
+    category: {},
     // sizes: [],
   });
   const [tempColors, setTempColors] = useState([]);
   const [temProductIdx, setTemProductIdx] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState(categories[0]);
+  console.log(selectedCategory);
 
   const [errors, setErrors] = useState({ ...product });
   const [isError, setIsError] = useState(false);
@@ -72,7 +76,10 @@ const App = () => {
       return;
     }
 
-    setProductList([{ ...product, id: nanoid(), colors: tempColors }, ...productList]);
+    setProductList([
+      { ...product, id: nanoid(), colors: tempColors, category: selectedCategory },
+      ...productList,
+    ]);
     // setPost({
     //   title: "",
     //   description: "",
@@ -110,6 +117,8 @@ const App = () => {
         setTemProductIdx={setTemProductIdx}
       />
     ));
+
+  console.log(productList);
 
   const renderFormInputList = formInputList.map(({ name, label, type }, idx) => (
     <div key={idx}>
@@ -167,7 +176,10 @@ const App = () => {
                 />
               ))}
             </div>
-            <SelectMenu />
+            <SelectMenu
+              selectedCategory={selectedCategory}
+              setSelectedCategory={setSelectedCategory}
+            />
 
             <FormSubmitBtn isError={isError} />
           </form>

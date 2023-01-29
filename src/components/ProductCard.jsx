@@ -12,8 +12,8 @@ const ProductCard = ({
   image,
   description,
   price,
-  brand,
   colors,
+  category,
   productList = [],
   setProductList,
   openModal = () => {},
@@ -51,6 +51,11 @@ const ProductCard = ({
         ) : (
           <ul className="flex items-center mb-3">{renderColors}</ul>
         )}
+
+        <div className="flex items-center mb-3">
+          <img src={category?.avatar} className="w-10 h-10 rounded-full" />
+          <p className="ml-3 text-sm font-medium text-gray-700">{category?.name}</p>
+        </div>
 
         <span className="absolute top-5 right-[5%] cursor-pointer" onClick={filterById}>
           <TrashIcon />
