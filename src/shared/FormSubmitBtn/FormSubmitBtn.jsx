@@ -1,7 +1,7 @@
 const FormSubmitBtn = ({ value = "add product", isError = false }) => {
   const errClass = isError
     ? "bg-red-700 hover:bg-red-600"
-    : "duration-300 bg-gradient-to-r from-purple-500 via-[#A31ACB] to-pink-500 hover:from-pink-500 hover:to-[#6C4AB6]";
+    : "duration-300 bg-indigo-600 hover:bg-indigo-700";
 
   return (
     <input
