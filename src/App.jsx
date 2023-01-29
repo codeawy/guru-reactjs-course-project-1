@@ -38,7 +38,6 @@ const App = () => {
   const [tempColors, setTempColors] = useState([]);
   const [temProductIdx, setTemProductIdx] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState(categories[0]);
-  console.log(selectedCategory);
 
   const [errors, setErrors] = useState({ ...product });
   const [isError, setIsError] = useState(false);
@@ -117,8 +116,6 @@ const App = () => {
         setTemProductIdx={setTemProductIdx}
       />
     ));
-
-  console.log(productList);
 
   const renderFormInputList = formInputList.map(({ name, label, type }, idx) => (
     <div key={idx}>
