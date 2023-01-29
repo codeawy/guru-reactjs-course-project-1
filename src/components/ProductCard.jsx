@@ -24,8 +24,6 @@ const ProductCard = ({
     setProductList(filteredArr);
   };
 
-  console.log(numberWithCommas(price));
-
   return (
     <div className="max-w-[350px] border-[1px] border-gray-300 rounded-lg flex flex-col justify-content h-fit overflow-hidden relative p-2">
       <div className="rounded-lg overflow-hidden">
@@ -38,7 +36,7 @@ const ProductCard = ({
           ${numberWithCommas(price)}
         </p>
         {!colors.length ? (
-          <span>Not available colors!</span>
+          <p className="mb-3">Not available colors!</p>
         ) : (
           <ul className="flex items-center mb-3">{renderColors}</ul>
         )}

@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { nanoid } from "nanoid";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 /* ------- SCHEMA -------  */
 import { productDataValidation } from "./validation/productValidation";
@@ -16,9 +18,11 @@ import ErrorMessage from "./shared/ErrorMessage/ErrorMessage";
 import ColorCircle from "./components/ColorCircle";
 import Modal from "./shared/Modal/Modal";
 import SelectMenu from "./shared/SelectMenu/SelectMenu";
+import HeroSection from "./components/HeroSection";
 
 const App = () => {
   /* ------- STATE -------  */
+  const notify = () => toast("Wow so easy!");
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [productList, setProductList] = useState([]);
   const [product, setProduct] = useState({
@@ -80,6 +84,16 @@ const App = () => {
 
     setTempColors([]);
     setIsError(false);
+    toast.success("Product has been added successfully", {
+      position: "bottom-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
   };
 
   /* ------- RENDER -------  */
@@ -110,56 +124,62 @@ const App = () => {
   ));
 
   return (
-    <div className="container mx-auto">
-      <div className="flex flex-col-reverse lg:flex-row justify-between gap-10 my-20">
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3 ">
-          {renderProductList}
+    <>
+      <HeroSection />
+      <div className="container mx-auto">
+        <div className="flex flex-col-reverse lg:flex-row justify-between gap-10">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3 ">
+            {renderProductList}
+          </div>
+
+          <form className="w-full lg:w-1/4" onSubmit={onSubmitHandler}>
+            {renderFormInputList}
+            <p className="text-sm font-medium text-gray-700">COLORS: ({tempColors.length})</p>
+            <p className="text-sm font-medium text-gray-700 mb-2">
+              Selected Colors: {!tempColors.length ? "__" : ""}
+            </p>
+            <p className="flex flex-wrap">
+              {tempColors.map(color => (
+                <span
+                  key={color}
+                  className="p-1 mr-1 mb-1 text-xs rounded-md text-white"
+                  style={{ backgroundColor: color }}
+                >
+                  {color}
+                </span>
+              ))}
+            </p>
+            <div className="flex items-center flex-wrap my-3">
+              {COLORS.map((color, idx) => (
+                <ColorCircle
+                  key={idx}
+                  bg={color}
+                  onClick={() => {
+                    if (tempColors.includes(color)) {
+                      setTempColors(prevState => prevState.filter(item => item !== color));
+                      return;
+                    }
+                    setTempColors(prev => [...prev, color]);
+                  }}
+                />
+              ))}
+            </div>
+            <SelectMenu />
+
+            <FormSubmitBtn isError={isError} />
+          </form>
         </div>
 
-        <form className="w-full lg:w-1/4" onSubmit={onSubmitHandler}>
-          {renderFormInputList}
-          <p className="text-sm font-medium text-gray-700">COLORS: ({tempColors.length})</p>
-          <p className="text-sm font-medium text-gray-700 mb-2">
-            Selected Colors: {!tempColors.length ? "__" : ""}
-          </p>
-          <p className="flex flex-wrap">
-            {tempColors.map(color => (
-              <span
-                key={color}
-                className="p-1 mr-1 mb-1 text-xs rounded-md text-white"
-                style={{ backgroundColor: color }}
-              >
-                {color}
-              </span>
-            ))}
-          </p>
-          <div className="flex items-center flex-wrap my-3">
-            {COLORS.map((color, idx) => (
-              <ColorCircle
-                key={idx}
-                bg={color}
-                onClick={() => {
-                  if (tempColors.includes(color)) {
-                    setTempColors(prevState => prevState.filter(item => item !== color));
-                    return;
-                  }
-                  setTempColors(prev => [...prev, color]);
-                }}
-              />
-            ))}
-          </div>
-          <SelectMenu />
-
-          <FormSubmitBtn isError={isError} />
-        </form>
+        <Modal
+          modalIsOpen={modalIsOpen}
+          closeModal={closeModal}
+          data={productList[temProductIdx]}
+          onClickAction={onDestroyProduct}
+        />
       </div>
-      <Modal
-        modalIsOpen={modalIsOpen}
-        closeModal={closeModal}
-        data={productList[temProductIdx]}
-        onClickAction={onDestroyProduct}
-      />
-    </div>
+      <button onClick={notify}>Notify!</button>
+      <ToastContainer />
+    </>
   );
 };
 
