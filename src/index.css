@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+  height: 5000px;
+}
+
 .webkit {
   display: -moz-box;
   display: -ms-box;

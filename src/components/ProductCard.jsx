@@ -18,7 +18,6 @@ const ProductCard = ({
   setProductList,
   openModal = () => {},
 }) => {
-  console.log(productList);
   const renderColors = colors.map(color => <ColorCircle key={color} bg={color} />);
 
   const filterById = () => {
@@ -37,7 +36,7 @@ const ProductCard = ({
   };
 
   return (
-    <div className="max-w-[350px] border-[1px] border-gray-300 rounded-lg flex flex-col justify-content h-fit overflow-hidden relative p-2">
+    <div className="w-full  sm:max-w-[350px] sm:mx-auto mx-0 border-[1px] border-gray-300 rounded-lg flex flex-col justify-content h-fit overflow-hidden relative p-2">
       <div className="rounded-lg overflow-hidden">
         <img src={image} alt="img" className="h-52 w-full lg:object-cover" />
       </div>

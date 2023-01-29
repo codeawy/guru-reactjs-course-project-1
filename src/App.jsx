@@ -129,7 +129,7 @@ const App = () => {
     <>
       <ToastContainer />
       <HeroSection />
-      <div className="container mx-auto">
+      <div className="container">
         <div className="flex flex-col-reverse lg:flex-row justify-between gap-10">
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3 ">
             {renderProductList}
