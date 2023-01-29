@@ -7,8 +7,9 @@ import "react-toastify/dist/ReactToastify.css";
 import { productDataValidation } from "./validation/productValidation";
 
 /* ------- MOCK -------  */
-import formInputList from "./lists/formInputs";
 import COLORS from "./lists/colors";
+import { PRODUCTS } from "./lists/products";
+import formInputList from "./lists/formInputs";
 
 /* ------- COMPONENT -------  */
 import ProductCard from "./components/ProductCard";
@@ -22,9 +23,8 @@ import HeroSection from "./components/HeroSection";
 
 const App = () => {
   /* ------- STATE -------  */
-  const notify = () => toast("Wow so easy!");
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [productList, setProductList] = useState([]);
+  const [productList, setProductList] = useState(PRODUCTS);
   const [product, setProduct] = useState({
     title: "",
     description: "",
@@ -72,7 +72,7 @@ const App = () => {
       return;
     }
 
-    setProductList([...productList, { ...product, id: nanoid(), colors: tempColors }]);
+    setProductList([{ ...product, id: nanoid(), colors: tempColors }, ...productList]);
     // setPost({
     //   title: "",
     //   description: "",
@@ -86,7 +86,7 @@ const App = () => {
     setIsError(false);
     toast.success("Product has been added successfully", {
       position: "bottom-center",
-      autoClose: 5000,
+      autoClose: 1000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -97,17 +97,19 @@ const App = () => {
   };
 
   /* ------- RENDER -------  */
-  const renderProductList = productList.map((product, idx) => (
-    <ProductCard
-      key={product.id}
-      {...product}
-      productList={productList}
-      setProductList={setProductList}
-      openModal={openModal}
-      idx={idx}
-      setTemProductIdx={setTemProductIdx}
-    />
-  ));
+  const renderProductList = productList
+    .reverse()
+    .map((product, idx) => (
+      <ProductCard
+        key={product.id}
+        {...product}
+        productList={productList}
+        setProductList={setProductList}
+        openModal={openModal}
+        idx={idx}
+        setTemProductIdx={setTemProductIdx}
+      />
+    ));
 
   const renderFormInputList = formInputList.map(({ name, label, type }, idx) => (
     <div key={idx}>
@@ -125,6 +127,7 @@ const App = () => {
 
   return (
     <>
+      <ToastContainer />
       <HeroSection />
       <div className="container mx-auto">
         <div className="flex flex-col-reverse lg:flex-row justify-between gap-10">
@@ -177,8 +180,6 @@ const App = () => {
           onClickAction={onDestroyProduct}
         />
       </div>
-      <button onClick={notify}>Notify!</button>
-      <ToastContainer />
     </>
   );
 };

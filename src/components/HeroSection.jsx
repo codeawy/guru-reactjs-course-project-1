@@ -128,8 +128,8 @@ export default function HeroSection() {
           <div className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
             <div className="text-center">
               <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
-                Create a new product with{" "}
-                <span className="text-indigo-600">blog builder project</span>
+                Learn ReactJS by Building
+                <br /> <span className="text-indigo-600">Product Builder Project</span>
               </h1>
               <p className="mt-6 text-lg leading-8 text-gray-600">
                 Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem cupidatat
@@ -140,7 +140,7 @@ export default function HeroSection() {
                   href="#"
                   className="rounded-md bg-indigo-600 px-3.5 py-1.5 text-base font-semibold leading-7 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 >
-                  Get started
+                  Build now
                 </a>
               </div>
             </div>

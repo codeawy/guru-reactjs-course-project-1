@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 import { numberWithCommas } from "../utils/func";
 import ColorCircle from "./ColorCircle";
 import TrashIcon from "./svg/TrashIcon";
@@ -17,11 +18,22 @@ const ProductCard = ({
   setProductList,
   openModal = () => {},
 }) => {
+  console.log(productList);
   const renderColors = colors.map(color => <ColorCircle key={color} bg={color} />);
 
   const filterById = () => {
     const filteredArr = productList.filter(item => item.id !== id);
     setProductList(filteredArr);
+    toast.success("Product has been removed successfully", {
+      position: "bottom-center",
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
   };
 
   return (
