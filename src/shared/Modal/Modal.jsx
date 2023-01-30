@@ -11,6 +11,8 @@ const customStyles = {
   },
 };
 
+ReactModal.setAppElement("#root");
+
 const Modal = ({ modalIsOpen, closeModal, data, onClickAction }) => {
   const renderColors = data?.colors.map(color => <ColorCircle key={color} bg={color} />);
 

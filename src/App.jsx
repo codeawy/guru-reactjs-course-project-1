@@ -7,18 +7,11 @@ import "react-toastify/dist/ReactToastify.css";
 import { productDataValidation } from "./validation/productValidation";
 
 /* ------- MOCK -------  */
-import COLORS from "./lists/colors";
 import { PRODUCTS } from "./lists/products";
-import formInputList from "./lists/formInputs";
 
 /* ------- COMPONENT -------  */
 import ProductCard from "./components/ProductCard";
-import FormInput from "./shared/FormInput/FormInput";
-import FormSubmitBtn from "./shared/FormSubmitBtn/FormSubmitBtn";
-import ErrorMessage from "./shared/ErrorMessage/ErrorMessage";
-import ColorCircle from "./components/ColorCircle";
 import Modal from "./shared/Modal/Modal";
-import SelectMenu from "./shared/SelectMenu/SelectMenu";
 import HeroSection from "./components/HeroSection";
 import { categories } from "./lists/categories";
 import BuildProductModal from "./shared/Modal/BuildProductModal";
@@ -39,7 +32,7 @@ const App = () => {
   });
   const [tempColors, setTempColors] = useState([]);
   const [temProductIdx, setTemProductIdx] = useState(null);
-  const [selectedCategory, setSelectedCategory] = useState(categories[0]);
+  const [selectedCategory, setSelectedCategory] = useState(categories[6]);
 
   const [errors, setErrors] = useState({ ...product });
   const [isError, setIsError] = useState(false);
@@ -56,6 +49,10 @@ const App = () => {
 
   const openModal = () => {
     setModalIsOpen(true);
+  };
+
+  const openBuildProductModal = () => {
+    setIsBuildModalOpen(true);
   };
 
   const closeBuildProductModal = () => {
@@ -84,17 +81,18 @@ const App = () => {
       { ...product, id: nanoid(), colors: tempColors, category: selectedCategory },
       ...productList,
     ]);
-    // setPost({
-    //   title: "",
-    //   description: "",
-    //   image: "",
-    //   price: "",
-    //   brand: "",
-    //   colors: [],
-    // });
+    setProduct({
+      title: "",
+      description: "",
+      image: "",
+      price: "",
+      brand: "",
+      colors: [],
+    });
 
     setTempColors([]);
     setIsError(false);
+    setIsBuildModalOpen(false);
     toast.success("Product has been added successfully", {
       position: "bottom-center",
       autoClose: 1000,
@@ -122,25 +120,22 @@ const App = () => {
       />
     ));
 
-  const renderFormInputList = formInputList.map(({ name, label, type }, idx) => (
-    <div key={idx}>
-      <FormInput
-        label={label}
-        name={name}
-        type={type}
-        id={label}
-        value={product[name]}
-        onChange={changeHandler}
-      />
-      <ErrorMessage msg={errors[name]} />
-    </div>
-  ));
-
   return (
     <>
       <ToastContainer />
-      <HeroSection onClickHandler={() => setIsBuildModalOpen(true)} />
+      <HeroSection onClickHandler={openBuildProductModal} />
       <div className="container">
+        <div className="flex items-center justify-between mb-10">
+          <h2 className="text-center text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
+            Latest <span className="text-indigo-600">Products</span>
+          </h2>
+          <div
+            className="mt-10 rounded-md bg-indigo-600 px-3.5 py-1.5 text-base font-semibold leading-7 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 cursor-pointer w-fit"
+            onClick={openBuildProductModal}
+          >
+            Build now
+          </div>
+        </div>
         <div className="grid grid-cols-products-grid gap-3">{renderProductList}</div>
 
         <BuildProductModal
