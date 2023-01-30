@@ -101,7 +101,7 @@ const App = () => {
       <div className="container mx-auto">
         <div className="grid grid-cols-products-grid gap-3 ">{renderPostList}</div>
         <BuildProductModal
-          modalIsOpen={modalIsOpen}
+          modalIsOpen={false}
           closeModal={closeModal}
           product={product}
           setProduct={setProduct}
@@ -112,7 +112,13 @@ const App = () => {
           changeHandler={changeHandler}
           onSubmitHandler={onSubmitHandler}
         />
-        <Modal modalIsOpen={false} closeModal={closeModal} data={productList[temProductIdx]} />
+        <Modal
+          modalIsOpen={modalIsOpen}
+          closeModal={closeModal}
+          data={productList[temProductIdx]}
+          productList={productList}
+          setProductList={setProductList}
+        />
       </div>
     </>
   );
