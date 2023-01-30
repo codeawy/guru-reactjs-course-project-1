@@ -58,6 +58,7 @@ const App = () => {
     e.preventDefault();
 
     setErrors(productDataValidation(product));
+
     if (Object.keys(productDataValidation(product)).length) {
       setIsError(true);
       return;
@@ -99,6 +100,7 @@ const App = () => {
         id={label}
         value={product[name]}
         onChange={changeHandler}
+        onClear={() => setProduct({ ...product, [name]: "" })}
       />
       <ErrorMessage msg={errors[name]} />
     </div>
@@ -141,7 +143,6 @@ const App = () => {
           <FormSubmitBtn isError={isError} />
         </form>
       </div>
-      {/* O(1)  */}
       <Modal modalIsOpen={modalIsOpen} closeModal={closeModal} data={productList[temProductIdx]} />
     </div>
   );
