@@ -16,6 +16,8 @@ import ErrorMessage from "./shared/ErrorMessage/ErrorMessage";
 import ColorCircle from "./components/ColorCircle";
 import COLORS from "./lists/colors";
 import Modal from "./shared/Modal/Modal";
+import HeroSection from "./components/HeroSection";
+import BuildProductModal from "./shared/Modal/BuildProductModal";
 
 const App = () => {
   /* ------- STATE -------  */
@@ -92,60 +94,27 @@ const App = () => {
     />
   ));
 
-  const renderFormInputList = formInputList.map(({ name, label, type }, idx) => (
-    <div key={idx}>
-      <FormInput
-        label={label}
-        name={name}
-        type={type}
-        id={label}
-        value={product[name]}
-        onChange={changeHandler}
-        onClear={() => setProduct({ ...product, [name]: "" })}
-      />
-      <ErrorMessage msg={errors[name]} />
-    </div>
-  ));
-
   return (
-    <div className="container mx-auto">
-      <div className="flex flex-col-reverse lg:flex-row justify-between gap-10 my-20">
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3 ">
-          {renderPostList}
-        </div>
+    <>
+      <HeroSection buildHandler={openModal} />
 
-        <form className="w-full lg:w-1/4" onSubmit={onSubmitHandler}>
-          {renderFormInputList}
-          <p>COLORS: ({tempColors.length})</p>
-          <p>
-            Selected Colors: {!tempColors.length ? "__" : ""}
-            {tempColors.map((color, idx) => (
-              <span key={color}>
-                {color}
-                {idx + 1 === tempColors.length ? "" : ", "}
-              </span>
-            ))}
-          </p>
-          <div className="flex items-center my-3">
-            {COLORS.map((color, idx) => (
-              <ColorCircle
-                key={idx}
-                bg={color}
-                onClick={() => {
-                  if (tempColors.includes(color)) {
-                    setTempColors(prevState => prevState.filter(item => item !== color));
-                    return;
-                  }
-                  setTempColors(prev => [...prev, color]);
-                }}
-              />
-            ))}
-          </div>
-          <FormSubmitBtn isError={isError} />
-        </form>
+      <div className="container mx-auto">
+        <div className="grid grid-cols-products-grid gap-3 ">{renderPostList}</div>
+        <BuildProductModal
+          modalIsOpen={modalIsOpen}
+          closeModal={closeModal}
+          product={product}
+          setProduct={setProduct}
+          tempColors={tempColors}
+          setTempColors={setTempColors}
+          errors={errors}
+          isError={isError}
+          changeHandler={changeHandler}
+          onSubmitHandler={onSubmitHandler}
+        />
+        <Modal modalIsOpen={false} closeModal={closeModal} data={productList[temProductIdx]} />
       </div>
-      <Modal modalIsOpen={modalIsOpen} closeModal={closeModal} data={productList[temProductIdx]} />
-    </div>
+    </>
   );
 };
 
