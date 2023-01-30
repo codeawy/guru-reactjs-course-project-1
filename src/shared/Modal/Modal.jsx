@@ -1,6 +1,7 @@
 import ReactModal from "react-modal";
 import { toast } from "react-toastify";
 import ColorCircle from "../../components/ColorCircle";
+import { numberWithCommas } from "../../utils/func";
 
 const customStyles = {
   content: {
@@ -12,25 +13,8 @@ const customStyles = {
 
 ReactModal.setAppElement("#root");
 
-const Modal = ({ modalIsOpen, closeModal, productList, setProductList, data }) => {
+const Modal = ({ modalIsOpen, closeModal, data, onClickAction }) => {
   const renderColors = data?.colors.map(color => <ColorCircle key={color} bg={color} />);
-
-  const filterById = () => {
-    const filteredArr = productList.filter(item => item.id !== data?.id);
-    setProductList(filteredArr);
-    closeModal();
-
-    toast.success("Product has been remove successfully!", {
-      position: "bottom-left",
-      autoClose: 2000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "dark",
-    });
-  };
 
   return (
     <ReactModal
@@ -61,7 +45,7 @@ const Modal = ({ modalIsOpen, closeModal, productList, setProductList, data }) =
                       className="rounded-xl block max-w-full max-h-96 mx-auto p-3 object-contain mt-4"
                     />
                     <p className="py-2 mt-4 rounded-md font-bold text-lg text-indigo-600">
-                      ${data?.price}
+                      ${numberWithCommas(data?.price)}
                     </p>
                     {!data?.colors.length ? (
                       <p className="mt-4">Not available colors!</p>
@@ -83,7 +67,18 @@ const Modal = ({ modalIsOpen, closeModal, productList, setProductList, data }) =
                   type="button"
                   className="inline-flex w-full justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
                   onClick={() => {
-                    filterById();
+                    onClickAction(data?.id);
+                    closeModal();
+                    toast.success("Product has been removed successfully", {
+                      position: "bottom-center",
+                      autoClose: 1000,
+                      hideProgressBar: false,
+                      closeOnClick: true,
+                      pauseOnHover: true,
+                      draggable: true,
+                      progress: undefined,
+                      theme: "dark",
+                    });
                   }}
                 >
                   Destroy

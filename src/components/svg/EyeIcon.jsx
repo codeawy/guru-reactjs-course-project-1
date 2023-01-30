@@ -1,22 +1,19 @@
 function EyeIcon() {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="none" viewBox="0 0 24 24">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="purple"
+      viewBox="0 0 24 24"
+      strokeWidth={1.5}
+      stroke="white"
+      className="w-6 h-6"
+    >
       <path
-        fillRule="evenodd"
-        stroke="#fff"
         strokeLinecap="round"
         strokeLinejoin="round"
-        strokeWidth="2"
-        d="M22 12c-1.747 3.576-6.123 7-10 7-3.878 0-8.254-3.424-10-7M22 12c-1.747-3.576-6.122-7-10-7-3.877 0-8.254 3.423-10 7"
-        clipRule="evenodd"
-      ></path>
-      <path
-        stroke="#fff"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="2"
-        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-      ></path>
+        d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"
+      />
+      <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
     </svg>
   );
 }

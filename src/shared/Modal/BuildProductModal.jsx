@@ -1,12 +1,11 @@
 import ReactModal from "react-modal";
 import ColorCircle from "../../components/ColorCircle";
-import { categories } from "../../lists/categories";
 import COLORS from "../../lists/colors";
 import formInputList from "../../lists/formInputs";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
 import FormInput from "../FormInput/FormInput";
 import FormSubmitBtn from "../FormSubmitBtn/FormSubmitBtn";
-import SelectMenu from "../SelectMenu";
+import SelectMenu from "../SelectMenu/SelectMenu";
 
 const customStyles = {
   content: {
@@ -16,6 +15,7 @@ const customStyles = {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+    width: "fit-content",
     margin: "0 auto",
   },
 };
@@ -29,11 +29,11 @@ const BuildProductModal = ({
   tempColors,
   setTempColors,
   errors,
+  selectedCategory,
+  setSelectedCategory,
   isError,
   changeHandler,
   onSubmitHandler,
-  selected,
-  setSelected,
 }) => {
   /* ------- RENDER -------  */
   const renderFormInputList = formInputList.map(({ name, label, type }, idx) => (
@@ -58,7 +58,7 @@ const BuildProductModal = ({
       contentLabel="Build Product"
       shouldCloseOnOverlayClick
     >
-      <div className="flex p-3 text-center sm:items-center justify-center sm:p-0 w-full lg:w-96">
+      <div className="flex p-4 text-center sm:items-center sm:p-0">
         <div className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
           <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
             <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
@@ -96,11 +96,10 @@ const BuildProductModal = ({
                 </div>
 
                 <SelectMenu
-                  list={categories}
-                  txt="Categories"
-                  selected={selected}
-                  setSelected={setSelected}
+                  selectedCategory={selectedCategory}
+                  setSelectedCategory={setSelectedCategory}
                 />
+
                 <FormSubmitBtn isError={isError} />
               </form>
             </div>

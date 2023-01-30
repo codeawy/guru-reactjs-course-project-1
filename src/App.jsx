@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { nanoid } from "nanoid";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 /* ------- SCHEMA -------  */
@@ -13,12 +13,12 @@ import { PRODUCTS } from "./lists/products";
 import ProductCard from "./components/ProductCard";
 import Modal from "./shared/Modal/Modal";
 import HeroSection from "./components/HeroSection";
-import BuildProductModal from "./shared/Modal/BuildProductModal";
 import { categories } from "./lists/categories";
+import BuildProductModal from "./shared/Modal/BuildProductModal";
 
 const App = () => {
   /* ------- STATE -------  */
-  const [buildModalIsOpen, setBuildModalIsOpen] = useState(false);
+  const [isBuildModalOpen, setIsBuildModalOpen] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [productList, setProductList] = useState(PRODUCTS);
   const [product, setProduct] = useState({
@@ -28,11 +28,11 @@ const App = () => {
     price: "",
     colors: [],
     category: {},
+    // sizes: [],
   });
-  const [selected, setSelected] = useState(categories[0]);
-
   const [tempColors, setTempColors] = useState([]);
   const [temProductIdx, setTemProductIdx] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState(categories[6]);
 
   const [errors, setErrors] = useState({ ...product });
   const [isError, setIsError] = useState(false);
@@ -47,92 +47,115 @@ const App = () => {
     setErrors({ ...errors, [name]: "" });
   };
 
-  // ** Product details modal
-  function openModal() {
+  const openModal = () => {
     setModalIsOpen(true);
-  }
-  function closeModal() {
+  };
+
+  const openBuildProductModal = () => {
+    setIsBuildModalOpen(true);
+  };
+
+  const closeBuildProductModal = () => {
+    setIsBuildModalOpen(false);
+  };
+  const closeModal = () => {
     setModalIsOpen(false);
     setTemProductIdx(null);
-  }
+  };
 
-  // ** Build a product details modal
-  function openModal() {
-    setBuildModalIsOpen(true);
-  }
-  function closeBuildModal() {
-    setBuildModalIsOpen(false);
-    // setTemProductIdx(null);
-  }
+  const onDestroyProduct = id => {
+    const filteredArr = productList.filter(item => item.id !== id);
+    setProductList(filteredArr);
+  };
 
   const onSubmitHandler = e => {
     e.preventDefault();
 
     setErrors(productDataValidation(product));
-
     if (Object.keys(productDataValidation(product)).length) {
       setIsError(true);
       return;
     }
 
     setProductList([
+      { ...product, id: nanoid(), colors: tempColors, category: selectedCategory },
       ...productList,
-      { ...product, id: nanoid(), colors: tempColors, category: selected },
     ]);
-    // setPost({
-    //   title: "",
-    //   description: "",
-    //   image: "",
-    //   price: "",
-    //   brand: "",
-    //   colors: [],
-    // });
+    setProduct({
+      title: "",
+      description: "",
+      image: "",
+      price: "",
+      brand: "",
+      colors: [],
+    });
 
     setTempColors([]);
     setIsError(false);
-    setBuildModalIsOpen(false);
+    setIsBuildModalOpen(false);
+    toast.success("Product has been added successfully", {
+      position: "bottom-center",
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
   };
 
   /* ------- RENDER -------  */
-  const renderPostList = productList.map((product, idx) => (
-    <ProductCard
-      key={product.id}
-      {...product}
-      productList={productList}
-      setProductList={setProductList}
-      openModal={openModal}
-      idx={idx}
-      setTemProductIdx={setTemProductIdx}
-    />
-  ));
+  const renderProductList = productList
+    .reverse()
+    .map((product, idx) => (
+      <ProductCard
+        key={product.id}
+        {...product}
+        productList={productList}
+        setProductList={setProductList}
+        openModal={openModal}
+        idx={idx}
+        setTemProductIdx={setTemProductIdx}
+      />
+    ));
 
   return (
     <>
       <ToastContainer />
-      <HeroSection buildHandler={openModal} />
+      <HeroSection onClickHandler={openBuildProductModal} />
+      <div className="container">
+        <div className="flex items-center justify-between mb-10">
+          <h2 className="text-center text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
+            Latest <span className="text-indigo-600">Products</span>
+          </h2>
+          <div
+            className="mt-10 rounded-md bg-indigo-600 px-3.5 py-1.5 text-base font-semibold leading-7 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 cursor-pointer w-fit"
+            onClick={openBuildProductModal}
+          >
+            Build now
+          </div>
+        </div>
+        <div className="grid grid-cols-products-grid gap-3">{renderProductList}</div>
 
-      <div className="container mx-auto">
-        <div className="grid grid-cols-products-grid gap-3 ">{renderPostList}</div>
         <BuildProductModal
-          modalIsOpen={buildModalIsOpen}
-          closeModal={closeBuildModal}
+          modalIsOpen={isBuildModalOpen}
+          closeModal={closeBuildProductModal}
           product={product}
-          setProduct={setProduct}
           tempColors={tempColors}
           setTempColors={setTempColors}
           errors={errors}
+          selectedCategory={selectedCategory}
+          setSelectedCategory={setSelectedCategory}
           isError={isError}
           changeHandler={changeHandler}
           onSubmitHandler={onSubmitHandler}
-          selected={selected}
-          setSelected={setSelected}
         />
         <Modal
           modalIsOpen={modalIsOpen}
           closeModal={closeModal}
           data={productList[temProductIdx]}
-          productList={productList}
-          setProductList={setProductList}
+          onClickAction={onDestroyProduct}
         />
       </div>
     </>

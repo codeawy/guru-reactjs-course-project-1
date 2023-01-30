@@ -9,5 +9,10 @@ const COLORS = [
   "#6C4AB6",
   "#CB1C8D",
   "#000000",
+  "#645CBB",
+  "#1F8A70",
+  "#13005A",
+  "#820000",
+  "#FF0032",
 ];
 export default COLORS;
