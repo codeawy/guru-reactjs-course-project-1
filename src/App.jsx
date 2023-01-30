@@ -75,7 +75,10 @@ const App = () => {
       return;
     }
 
-    setProductList([...productList, { ...product, id: nanoid(), colors: tempColors }]);
+    setProductList([
+      ...productList,
+      { ...product, id: nanoid(), colors: tempColors, category: selected },
+    ]);
     // setPost({
     //   title: "",
     //   description: "",
@@ -87,6 +90,7 @@ const App = () => {
 
     setTempColors([]);
     setIsError(false);
+    setBuildModalIsOpen(false);
   };
 
   /* ------- RENDER -------  */

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Modal from "../shared/Modal/Modal";
+import { numberWithCommas } from "../utils/functions";
 import ColorCircle from "./ColorCircle";
 import CloseIcon from "./svg/CloseIcon";
 import EyeIcon from "./svg/EyeIcon";
@@ -14,6 +15,7 @@ const ProductCard = ({
   price,
   brand,
   colors,
+  category,
   productList = [],
   setProductList,
   openModal = () => {},
@@ -32,10 +34,8 @@ const ProductCard = ({
       </div>
       <div className="p-2 text-sm mt-3">
         <h3 className="text-lg uppercase">{title}</h3>
-        <p className="text-xs text-gray-500 my-2 break-words webkit">{description}</p>
-        <p className="flex items-center mb-3">
-          <del className="text-red-600 mr-5">${price}</del>
-          <span className="py-2 px-4 rounded-md text-white bg-primary">${+price / 4}</span>
+        <p className="py-2 rounded-md font-bold text-lg text-indigo-600">
+          {numberWithCommas(price)}
         </p>
         {!colors.length ? (
           <span>Not available colors!</span>
@@ -43,9 +43,10 @@ const ProductCard = ({
           <ul className="flex items-center mb-3">{renderColors}</ul>
         )}
 
-        <p className="mt-6 text-xs">
-          Brand: <span className="text-primary">{brand}</span>
-        </p>
+        <div className="flex items-center mb-3">
+          <img src={category?.avatar} className="w-10 h-10 rounded-full" />
+          <p className="ml-3 text-sm font-medium text-gray-700">{category?.name}</p>
+        </div>
         <span className="absolute top-5 right-5 cursor-pointer" onClick={filterById}>
           <CloseIcon />
         </span>
