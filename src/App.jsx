@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { nanoid } from "nanoid";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 /* ------- SCHEMA -------  */
 import { productDataValidation } from "./validation/productValidation";
@@ -96,6 +98,7 @@ const App = () => {
 
   return (
     <>
+      <ToastContainer />
       <HeroSection buildHandler={openModal} />
 
       <div className="container mx-auto">

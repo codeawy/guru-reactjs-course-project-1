@@ -1,4 +1,5 @@
 import ReactModal from "react-modal";
+import { toast } from "react-toastify";
 import ColorCircle from "../../components/ColorCircle";
 
 const customStyles = {
@@ -18,6 +19,17 @@ const Modal = ({ modalIsOpen, closeModal, productList, setProductList, data }) =
     const filteredArr = productList.filter(item => item.id !== data?.id);
     setProductList(filteredArr);
     closeModal();
+
+    toast.success("Product has been remove successfully!", {
+      position: "bottom-left",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
   };
 
   return (
