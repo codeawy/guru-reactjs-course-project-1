@@ -6,6 +6,7 @@ import { productDataValidation } from "./validation/productValidation";
 
 /* ------- MOCK -------  */
 import formInputList from "./lists/formInputs";
+import { PRODUCTS } from "./lists/products";
 
 /* ------- COMPONENT -------  */
 import ProductCard from "./components/ProductCard";
@@ -19,7 +20,7 @@ import Modal from "./shared/Modal/Modal";
 const App = () => {
   /* ------- STATE -------  */
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [productList, setProductList] = useState([]);
+  const [productList, setProductList] = useState(PRODUCTS);
   const [product, setProduct] = useState({
     title: "",
     description: "",
