@@ -9,6 +9,9 @@ module.exports = {
       },
     },
     extend: {
+      gridTemplateColumns: {
+        "products-grid": "repeat(auto-fill, minmax(250px, 1fr))",
+      },
       colors: {
         primary: "#334155",
       },

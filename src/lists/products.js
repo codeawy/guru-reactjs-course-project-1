@@ -45,21 +45,6 @@ export const PRODUCTS = [
     },
   },
   {
-    title: "Black T-Shirt with white circle",
-    description:
-      "As luxury T-Shirt is just as distinctive and can be trimmed with premium materials like Nappa leather and carbon fiber.",
-    image:
-      "https://images.unsplash.com/photo-1618354691438-25bc04584c23?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=715&q=80",
-    price: "120",
-    colors: ["#84D2C5", "#FF6E31", "#1F8A70", "#a855f7", "#FF0032"],
-    id: "CSNpOoQQQRDuq1U9zJNWh",
-    category: {
-      name: "T-Shirt",
-      avatar:
-        "https://images.unsplash.com/photo-1593030761757-71fae45fa0e7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80",
-    },
-  },
-  {
     title: "Nike Shoes",
     description:
       "As luxury T-Shirt is just as distinctive and can be trimmed with premium materials like Nappa leather and carbon fiber.",

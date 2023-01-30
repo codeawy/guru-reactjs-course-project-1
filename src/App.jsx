@@ -21,9 +21,11 @@ import Modal from "./shared/Modal/Modal";
 import SelectMenu from "./shared/SelectMenu/SelectMenu";
 import HeroSection from "./components/HeroSection";
 import { categories } from "./lists/categories";
+import BuildProductModal from "./shared/Modal/BuildProductModal";
 
 const App = () => {
   /* ------- STATE -------  */
+  const [isBuildModalOpen, setIsBuildModalOpen] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [productList, setProductList] = useState(PRODUCTS);
   const [product, setProduct] = useState({
@@ -56,6 +58,9 @@ const App = () => {
     setModalIsOpen(true);
   };
 
+  const closeBuildProductModal = () => {
+    setIsBuildModalOpen(false);
+  };
   const closeModal = () => {
     setModalIsOpen(false);
     setTemProductIdx(null);
@@ -134,54 +139,23 @@ const App = () => {
   return (
     <>
       <ToastContainer />
-      <HeroSection />
+      <HeroSection onClickHandler={() => setIsBuildModalOpen(true)} />
       <div className="container">
-        <div className="flex flex-col-reverse lg:flex-row justify-between gap-10">
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3 ">
-            {renderProductList}
-          </div>
+        <div className="grid grid-cols-products-grid gap-3">{renderProductList}</div>
 
-          <form className="w-full lg:w-1/4" onSubmit={onSubmitHandler}>
-            {renderFormInputList}
-            <p className="text-sm font-medium text-gray-700">COLORS: ({tempColors.length})</p>
-            <p className="text-sm font-medium text-gray-700 mb-2">
-              Selected Colors: {!tempColors.length ? "__" : ""}
-            </p>
-            <p className="flex flex-wrap">
-              {tempColors.map(color => (
-                <span
-                  key={color}
-                  className="p-1 mr-1 mb-1 text-xs rounded-md text-white"
-                  style={{ backgroundColor: color }}
-                >
-                  {color}
-                </span>
-              ))}
-            </p>
-            <div className="flex items-center flex-wrap my-3">
-              {COLORS.map((color, idx) => (
-                <ColorCircle
-                  key={idx}
-                  bg={color}
-                  onClick={() => {
-                    if (tempColors.includes(color)) {
-                      setTempColors(prevState => prevState.filter(item => item !== color));
-                      return;
-                    }
-                    setTempColors(prev => [...prev, color]);
-                  }}
-                />
-              ))}
-            </div>
-            <SelectMenu
-              selectedCategory={selectedCategory}
-              setSelectedCategory={setSelectedCategory}
-            />
-
-            <FormSubmitBtn isError={isError} />
-          </form>
-        </div>
-
+        <BuildProductModal
+          modalIsOpen={isBuildModalOpen}
+          closeModal={closeBuildProductModal}
+          product={product}
+          tempColors={tempColors}
+          setTempColors={setTempColors}
+          errors={errors}
+          selectedCategory={selectedCategory}
+          setSelectedCategory={setSelectedCategory}
+          isError={isError}
+          changeHandler={changeHandler}
+          onSubmitHandler={onSubmitHandler}
+        />
         <Modal
           modalIsOpen={modalIsOpen}
           closeModal={closeModal}
