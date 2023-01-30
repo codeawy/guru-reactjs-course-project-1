@@ -24,9 +24,5 @@ export const productDataValidation = values => {
     errors.brand = "Price is required!";
   }
 
-  if (!values.brand.trim()) {
-    errors.brand = "Brand name is required";
-  }
-
   return errors;
 };

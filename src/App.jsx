@@ -7,22 +7,18 @@ import "react-toastify/dist/ReactToastify.css";
 import { productDataValidation } from "./validation/productValidation";
 
 /* ------- MOCK -------  */
-import formInputList from "./lists/formInputs";
 import { PRODUCTS } from "./lists/products";
 
 /* ------- COMPONENT -------  */
 import ProductCard from "./components/ProductCard";
-import FormInput from "./shared/FormInput/FormInput";
-import FormSubmitBtn from "./shared/FormSubmitBtn/FormSubmitBtn";
-import ErrorMessage from "./shared/ErrorMessage/ErrorMessage";
-import ColorCircle from "./components/ColorCircle";
-import COLORS from "./lists/colors";
 import Modal from "./shared/Modal/Modal";
 import HeroSection from "./components/HeroSection";
 import BuildProductModal from "./shared/Modal/BuildProductModal";
+import { categories } from "./lists/categories";
 
 const App = () => {
   /* ------- STATE -------  */
+  const [buildModalIsOpen, setBuildModalIsOpen] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [productList, setProductList] = useState(PRODUCTS);
   const [product, setProduct] = useState({
@@ -30,10 +26,11 @@ const App = () => {
     description: "",
     image: "",
     price: "",
-    brand: "",
     colors: [],
-    // sizes: [],
+    category: {},
   });
+  const [selected, setSelected] = useState(categories[0]);
+
   const [tempColors, setTempColors] = useState([]);
   const [temProductIdx, setTemProductIdx] = useState(null);
 
@@ -50,13 +47,22 @@ const App = () => {
     setErrors({ ...errors, [name]: "" });
   };
 
+  // ** Product details modal
   function openModal() {
     setModalIsOpen(true);
   }
-
   function closeModal() {
     setModalIsOpen(false);
     setTemProductIdx(null);
+  }
+
+  // ** Build a product details modal
+  function openModal() {
+    setBuildModalIsOpen(true);
+  }
+  function closeBuildModal() {
+    setBuildModalIsOpen(false);
+    // setTemProductIdx(null);
   }
 
   const onSubmitHandler = e => {
@@ -104,8 +110,8 @@ const App = () => {
       <div className="container mx-auto">
         <div className="grid grid-cols-products-grid gap-3 ">{renderPostList}</div>
         <BuildProductModal
-          modalIsOpen={false}
-          closeModal={closeModal}
+          modalIsOpen={buildModalIsOpen}
+          closeModal={closeBuildModal}
           product={product}
           setProduct={setProduct}
           tempColors={tempColors}
@@ -114,6 +120,8 @@ const App = () => {
           isError={isError}
           changeHandler={changeHandler}
           onSubmitHandler={onSubmitHandler}
+          selected={selected}
+          setSelected={setSelected}
         />
         <Modal
           modalIsOpen={modalIsOpen}

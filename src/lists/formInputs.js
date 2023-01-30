@@ -19,9 +19,4 @@ export default [
     label: "Product Price",
     type: "text",
   },
-  {
-    name: "brand",
-    label: "Brand",
-    type: "text",
-  },
 ];
