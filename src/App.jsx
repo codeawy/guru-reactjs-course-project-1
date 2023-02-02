@@ -107,7 +107,6 @@ const App = () => {
 
   /* ------- RENDER -------  */
   const renderProductList = productList
-    .reverse()
     .map((product, idx) => (
       <ProductCard
         key={product.id}
