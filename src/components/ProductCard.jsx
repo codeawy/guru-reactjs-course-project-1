@@ -18,7 +18,10 @@ const ProductCard = ({
   setProductList,
   openModal = () => {},
 }) => {
-  const renderColors = colors.map(color => <ColorCircle key={color} bg={color} />);
+  const MAX_COLORS_LENGTH = 7;
+  const renderColors = colors
+    .slice(0, MAX_COLORS_LENGTH)
+    .map(color => <ColorCircle key={color} bg={color} />);
 
   const filterById = () => {
     const filteredArr = productList.filter(item => item.id !== id);
@@ -49,7 +52,14 @@ const ProductCard = ({
         {!colors.length ? (
           <p className="mb-3">Not available colors!</p>
         ) : (
-          <ul className="flex items-center mb-3">{renderColors}</ul>
+          <div className="flex items-center mb-3">
+            {renderColors}
+            <span className="mb-1 font-semibold text-lg">
+              {colors.length >= MAX_COLORS_LENGTH && colors.length - MAX_COLORS_LENGTH
+                ? `+ ${colors.length - MAX_COLORS_LENGTH}`
+                : null}
+            </span>
+          </div>
         )}
 
         <div className="flex items-center mb-3">

@@ -1,4 +1,3 @@
-/* This example requires Tailwind CSS v3.0+ */
 import { useState } from "react";
 import { Dialog } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
@@ -42,14 +41,7 @@ export default function HeroSection({ onClickHandler }) {
       <div className="pt-6">
         <nav className="flex items-center justify-between" aria-label="Global">
           <div className="flex lg:flex-1">
-            <a href="#" className="-m-1.5 p-1.5">
-              <span className="sr-only">Codeawy</span>
-              <img
-                className="h-8"
-                src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-                alt=""
-              />
-            </a>
+            <h3 className="cursor-pointer text-lg font-semibold">Codeawy</h3>
           </div>
           <div className="flex lg:hidden">
             <button
@@ -79,14 +71,9 @@ export default function HeroSection({ onClickHandler }) {
             className="fixed inset-0 z-10 overflow-y-auto bg-white px-6 py-6 lg:hidden"
           >
             <div className="flex items-center justify-between">
-              <a href="#" className="-m-1.5 p-1.5">
-                <span className="sr-only">Your Company</span>
-                <img
-                  className="h-8"
-                  src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-                  alt=""
-                />
-              </a>
+              <div className="flex lg:flex-1">
+                <h3 className="cursor-pointer text-lg font-semibold">Codeawy</h3>
+              </div>
               <button
                 type="button"
                 className="-m-2.5 rounded-md p-2.5 text-gray-700"

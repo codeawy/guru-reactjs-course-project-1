@@ -106,18 +106,17 @@ const App = () => {
   };
 
   /* ------- RENDER -------  */
-  const renderProductList = productList
-    .map((product, idx) => (
-      <ProductCard
-        key={product.id}
-        {...product}
-        productList={productList}
-        setProductList={setProductList}
-        openModal={openModal}
-        idx={idx}
-        setTemProductIdx={setTemProductIdx}
-      />
-    ));
+  const renderProductList = productList.map((product, idx) => (
+    <ProductCard
+      key={product.id}
+      {...product}
+      productList={productList}
+      setProductList={setProductList}
+      openModal={openModal}
+      idx={idx}
+      setTemProductIdx={setTemProductIdx}
+    />
+  ));
 
   return (
     <>
@@ -129,7 +128,7 @@ const App = () => {
             Latest <span className="text-indigo-600">Products</span>
           </h2>
           <div
-            className="mt-10 rounded-md bg-indigo-600 px-3.5 py-1.5 text-base font-semibold leading-7 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 cursor-pointer w-fit"
+            className="rounded-md bg-indigo-600 px-3.5 py-1.5 text-base font-semibold leading-7 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 cursor-pointer w-fit"
             onClick={openBuildProductModal}
           >
             Build now
